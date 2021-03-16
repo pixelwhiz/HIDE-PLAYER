@@ -5,6 +5,7 @@
 This plugin will help you to hide your name and skin
 # Commands:
 /hide <name/body>
+
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/70942403/111326119-df0c1d80-869e-11eb-9da6-0ebe5cace036.gif)
 
 # Download:
