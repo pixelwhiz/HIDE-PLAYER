@@ -7,4 +7,4 @@ This plugin will help you to hide your name and skin
 /hide name, body
 
 # Download:
-You can download this plugin at [Here](https://github.com/DerphSZ/Hide_Me/releases/download/0.0.1/Hide_Me_v0.0.1.phar) 
+> You can download this plugin at [Here](https://github.com/DerphSZ/Hide_Me/releases/download/0.0.1/Hide_Me_v0.0.1.phar) 
