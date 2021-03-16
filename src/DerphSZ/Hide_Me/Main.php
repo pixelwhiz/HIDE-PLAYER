@@ -17,7 +17,11 @@ class Main extends PluginBase implements Listener {
 	public $body = [];
 	
 	public function onEnable(){
-		$this->getLogger("");
+	}
+	
+	public function onJoin(PlayerJoinEvent $event){
+		$player = $event->getPlayer();
+		unset($this->name[$player->getName()]);
 	}
 	
 	public function onCommand(CommandSender $player, command $cmd, string $label, array $args) : bool {
@@ -25,25 +29,29 @@ class Main extends PluginBase implements Listener {
 			case "hide":
 			if($player instanceof Player){
 				if(!isset($args[0])){
-					$player->sendMessage("§6Usage: /hide <body, name>");
+					$player->sendMessage("§6Usage: /hide body, name");
 					return true;
 				}
 				$arg = array_shift($args);
 				switch($arg){
 					case "name":
 					if(!isset($this->name[$player->getName()])){
+						$this->name[$player->getName()] = $player->getName();
 						$player->setNameTagVisible(true);
 						$player->sendMessage("§aYour name has been Hidden!");
 					}else{
+						unset($this->name[$player->getName()]);
 						$player->setNameTagVisible(false);
 						$player->sendMessage("§cYour name has been Shown!");
 					}
 					break;
 					case "body":
 					if(!isset($this->body[$player->getName()])){
+						$this->body[$player->getName()] = $player->getName();
 						$player->setInvisible(true);
 						$player->sendMessage("§aYour body has been Hidden!");
 					}else{
+						unset($this->body[$player->getName()]);
 						$player->setInvisible(false);
 						$player->sendMessage("§cYour body has been Shown!");
 					}
