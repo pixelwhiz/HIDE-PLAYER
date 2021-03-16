@@ -1,3 +1,6 @@
+
+![Hide_Me](https://user-images.githubusercontent.com/70942403/111258232-28cd1780-864f-11eb-8ba3-67c1c306847c.png)
+
 # Hide_Me
 This plugin will help you to hide your name and skin
 # Commands:
