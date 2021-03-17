@@ -14,7 +14,7 @@ use pocketmine\Server;
 class Main extends PluginBase implements Listener {
 	
 	public $name = [];
-	public $body = [];
+	public $skin = [];
 	
 	public function onEnable(){
 	}
@@ -22,6 +22,7 @@ class Main extends PluginBase implements Listener {
 	public function onJoin(PlayerJoinEvent $event){
 		$player = $event->getPlayer();
 		unset($this->name[$player->getName()]);
+		unset($this->skin[$player->getName()]);
 	}
 	
 	public function onCommand(CommandSender $player, command $cmd, string $label, array $args) : bool {
@@ -29,36 +30,38 @@ class Main extends PluginBase implements Listener {
 			case "hide":
 			if($player instanceof Player){
 				if(!isset($args[0])){
-					$player->sendMessage("§6Usage: /hide body, name");
+					$player->sendMessage("§aUsage: /hide <skin, nametag>");
 					return true;
 				}
 				$arg = array_shift($args);
 				switch($arg){
-					case "name":
+					case "nametag":
 					if(!isset($this->name[$player->getName()])){
 						$this->name[$player->getName()] = $player->getName();
 						$player->setNameTagVisible(true);
-						$player->sendMessage("§aYour name has been Hidden!");
+						$player->sendMessage("§eYour nametag has been Hidden!");
 					}else{
 						unset($this->name[$player->getName()]);
 						$player->setNameTagVisible(false);
-						$player->sendMessage("§cYour name has been Shown!");
+						$player->sendMessage("§cYour nametag has been Shown!");
 					}
 					break;
-					case "body":
-					if(!isset($this->body[$player->getName()])){
-						$this->body[$player->getName()] = $player->getName();
+					case "skin":
+					if(!isset($this->skin[$player->getName()])){
+						$this->skin[$player->getName()] = $player->getName();
 						$player->setInvisible(true);
-						$player->sendMessage("§aYour body has been Hidden!");
+						$player->sendMessage("§eYour skin has been Hidden!");
 					}else{
-						unset($this->body[$player->getName()]);
+						unset($this->skin[$player->getName()]);
 						$player->setInvisible(false);
-						$player->sendMessage("§cYour body has been Shown!");
+						$player->sendMessage("§cYour skin has been Shown!");
 					}
 					break;
 				}
+					
+			}else{
+				$player->sendMessage("§cUse this command in game");
 			}
-			break;
 		}
 		return true;
 	}
