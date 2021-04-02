@@ -15,48 +15,90 @@ class Main extends PluginBase implements Listener {
 	
 	public $name = [];
 	public $skin = [];
+	public $player = [];
 	
 	public function onEnable(){
 	}
 	
 	public function onJoin(PlayerJoinEvent $event){
 		$player = $event->getPlayer();
-		unset($this->name[$player->getName()]);
-		unset($this->skin[$player->getName()]);
+		foreach($this->getServer()->getOnlinePlayers() as $players){
+			
+			unset($this->player[$player->getName()]);
+			unset($this->name[$player->getName()]);
+			unset($this->skin[$player->getName()]);
+			
+			$player->setNameTagVisible(false);
+			$player->setInvisible(false);
+			$players->showPlayer($player);
+			
+		}
+	}
+	
+	public function onRespawn(PlayerRespawnEvent $event){
+		$player = $event->getPlayer();
+		
+		foreach($this->getServer()->getOnlinePlayers() as $players){
+			
+			unset($this->player[$player->getName()]);
+			unset($this->name[$player->getName()]);
+			unset($this->skin[$player->getName()]);
+			
+			$player->setNameTagVisible(false);
+			$player->setInvisible(false);
+			$players->showPlayer($player);
+			
+		}
+		
 	}
 	
 	public function onCommand(CommandSender $player, command $cmd, string $label, array $args) : bool {
 		switch($cmd->getName()){
 			case "hide":
 			if($player instanceof Player){
-				if(!isset($args[0])){
-					$player->sendMessage("§aUsage: /hide <skin, nametag>");
-					return true;
-				}
-				$arg = array_shift($args);
-				switch($arg){
+				
+				switch(array_shift($args)){
 					case "nametag":
+					
 					if(!isset($this->name[$player->getName()])){
 						$this->name[$player->getName()] = $player->getName();
 						$player->setNameTagVisible(true);
-						$player->sendMessage("§eYour nametag has been Hidden!");
+						$player->sendMessage("§eYour §anametag §ehas been hidden");
 					}else{
 						unset($this->name[$player->getName()]);
 						$player->setNameTagVisible(false);
-						$player->sendMessage("§cYour nametag has been Shown!");
+						$player->sendMessage("§eYour §anametag §ehas been shown");
 					}
 					break;
 					case "skin":
 					if(!isset($this->skin[$player->getName()])){
 						$this->skin[$player->getName()] = $player->getName();
 						$player->setInvisible(true);
-						$player->sendMessage("§eYour skin has been Hidden!");
+						$player->setNameTag($player->getNameTag());
+						$player->sendMessage("§eYour §askin §ehas been hidden");
 					}else{
 						unset($this->skin[$player->getName()]);
 						$player->setInvisible(false);
-						$player->sendMessage("§cYour skin has been Shown!");
+						$player->sendMessage("§eYour §askin §ehas been shown");
 					}
 					break;
+					case "player":
+					if(!isset($this->player[$player->getName()])){
+						foreach($this->getServer()->getOnlinePlayers() as $players){
+							$this->player[$player->getName()] = $player->getName();
+							$players->hidePlayer($player);
+							$player->sendMessage("§eYour §aplayer §ehas been hidden");
+						}
+					}else{
+						foreach($this->getServer()->getOnlinePlayers() as $players){
+							unset($this->player[$player->getName()]);
+							$players->showPlayer($player);
+							$player->sendMessage("§eYour §aplayer §ehas been shown");
+						}
+					}
+					break;
+					default:
+					$player->sendMessage("§cUsage: /hide <nametag|skin|player>");
 				}
 					
 			}else{
