@@ -3,7 +3,7 @@ name: Hide_Me
 version: 0.0.2
 main: DerphSZ\Hide_Me\Main
 api: 3.0.0
-author: DerphSZ
+author: ItzDapaKrep
 commands:
  hide:
   description: "Hide commands"
